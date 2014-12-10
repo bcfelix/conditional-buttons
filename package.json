@@ -1,0 +1,25 @@
+{
+  "name": "jquery.conditionalbuttons",
+  "version": "1.0.0",
+  "description": "JQuery based conditional buttons",
+  "author": "Felix Lau <blackcatfelix@hotmail.com>",
+  "homepage": "https://github.com/bcfelix/conditional-buttons",
+  "main": "jquery.conditionalbuttons.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcfelix/conditional-buttons.git"
+  },
+  "optionalDependencies": {
+    "contextual-eval": "1.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/bcfelix/conditional-buttons/issues"
+  },
+  "keywords": [
+    "javascript",
+    "jquery",
+    "condition",
+    "button"
+  ],
+  "license": "MIT"
+}
