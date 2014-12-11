@@ -1,0 +1,22 @@
+body {
+  background-color: #81CFE0;
+}
+.container-fluid {
+  margin: 120px 12px 12px;
+}
+#controls {
+  margin-top: 80px;
+  background-color: #ECF0F1;
+  display: inline-block;
+  border: 1px solid lightgray;
+}
+.control {
+  display: inline-block;
+  padding: 10px 14px;
+}
+.control .glyphicon {
+  font-size: 18px;
+}
+.control input[type=checkbox] {
+  margin: 8px 0 0;
+}

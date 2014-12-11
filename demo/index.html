@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Conditional Buttons Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="app.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="lib/contextual-eval.min.js"></script>
+    <script src="../jquery.conditionalbuttons.min.js"></script>
+    <script>
+    $(function() {
+      /* register expressions for enable case */
+      $('#btn-zoom').conditionalbuttons('checkedBoxes[0] == true');
+      $('#btn-remove').conditionalbuttons('checkedBoxes[1] == true');
+      $('#btn-star').conditionalbuttons('checkedBoxes[2] == true');
+      $('#btn-map').conditionalbuttons('checkedBoxes[3] == true');
+      $('#btn-cloud').conditionalbuttons('checkedBoxes[4] == true');
+      $('#btn-plus').conditionalbuttons('checkedBoxes[5] == true');
+      $('#btn-minus').conditionalbuttons('checkedBoxes[6] == true');
+      $('#btn-time').conditionalbuttons('checkedBoxes[7] == true');
+      /* end of register expressions */
+
+      var controls = $('.control input');
+      controls.click(function() {
+        var ctx = [];
+        for(var i = 0; i < controls.length; i++) {
+          ctx[i] = controls[i].checked ? true : false;
+        }
+        $.conditionalbuttons.trigger({checkedBoxes: ctx});
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div class="container-fluid text-center">
+      <div class="btn-group" role="group" aria-label="...">
+        <button id="btn-zoom" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-zoom-in"/></button>
+        <button id="btn-remove" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-remove"/></button>
+        <button id="btn-star" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star"/></button>
+        <button id="btn-map" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-map-marker"/></button>
+        <button id="btn-cloud" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-cloud"/></button>
+        <button id="btn-plus" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-plus"/></button>
+        <button id="btn-minus" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus"/></button>
+        <button id="btn-time" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-time"/></button>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div id="controls" class="text-center">
+        <div class="control">
+          <span class="glyphicon glyphicon-zoom-in"/><br/><input id="btn-zoom-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-remove"/><br/><input id="btn-remove-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-star"/><br/><input id="btn-star-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-map-marker"/><br/><input id="btn-map-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-cloud"/><br/><input id="btn-cloud-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-plus"/><br/><input id="btn-plus-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-minus"/><br/><input id="btn-minus-ctrl" type="checkbox">
+        </div>
+        <div class="control">
+          <span class="glyphicon glyphicon-time"/><br/><input id="btn-time-ctrl" type="checkbox">
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
