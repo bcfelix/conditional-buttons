@@ -1,22 +1,47 @@
-body {
-  background-color: #81CFE0;
-}
 .container-fluid {
-  margin: 120px 12px 12px;
+  padding: 36px 12px;
+  border: 1px solid lightgray;
+  background-color: white;
 }
 #controls {
-  margin-top: 80px;
+  margin-top: 20px;
   background-color: #ECF0F1;
   display: inline-block;
   border: 1px solid lightgray;
 }
 .control {
   display: inline-block;
-  padding: 10px 14px;
+  padding: 10px 14px 0;
 }
 .control .glyphicon {
   font-size: 18px;
 }
 .control input[type=checkbox] {
   margin: 8px 0 0;
+}
+*:focus {
+  outline: none;
+}
+label {
+  cursor: pointer;
+}
+#console hr {
+  margin-bottom: 12px;
+}
+#demo-scripts div {
+  margin-bottom: 6px;
+  color: dimgray;
+}
+#demo-scripts .glyphicon {
+  border: 1px solid lightgray;
+  padding: 8px;
+  border-radius: 3px;
+  color: black;
+  margin: 0 2px;
+}
+#demo-scripts .glyphicon.formula {
+  background-color: #ecf0f1;
+}
+#demo-scripts .glyphicon.result {
+  background-color: #f5d76e;
 }

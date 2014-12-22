@@ -13,16 +13,23 @@
     <script>
     $(function() {
       /* register expressions for enable case */
-      $('#btn-zoom').conditionalbuttons('checkedBoxes[0] == true');
-      $('#btn-remove').conditionalbuttons('checkedBoxes[1] == true');
-      $('#btn-star').conditionalbuttons('checkedBoxes[2] == true');
-      $('#btn-map').conditionalbuttons('checkedBoxes[3] == true');
-      $('#btn-cloud').conditionalbuttons('checkedBoxes[4] == true');
-      $('#btn-plus').conditionalbuttons('checkedBoxes[5] == true');
-      $('#btn-minus').conditionalbuttons('checkedBoxes[6] == true');
-      $('#btn-time').conditionalbuttons('checkedBoxes[7] == true');
+      //$('#btn-zoom').conditionalbuttons('checkedBoxes[0] == true');
+      $('#btn-zoom').conditionalbuttons({
+        condition: 'checkedBoxes[0] == true',
+        activeCallback: function(button) {
+          button.css('color', '#ef4836');
+        },
+        disableCallback: function(button) {
+          button.css('color', '#95a5a6');
+        }
+      });
+      $('#btn-zoom').conditionalbuttons('checkedBoxes[4] == true');
+      $('#btn-remove, #btn-star').conditionalbuttons('checkedBoxes[0] == true && checkedBoxes[1] == true');
+      $('#btn-map, #btn-cloud, #btn-plus').conditionalbuttons('checkedBoxes[0] == false && checkedBoxes[2] == true && checkedBoxes[3] == true');
+      $('.btn-group button').conditionalbuttons('checkedBoxes[5] == true');
       /* end of register expressions */
 
+      /* trigger to change button stages */
       var controls = $('.control input');
       controls.click(function() {
         var ctx = [];
@@ -36,44 +43,36 @@
   </head>
   <body>
     <div class="container-fluid text-center">
+      <h2>Conditional Buttons</h2>
+
+      <hr/>
+
       <div class="btn-group" role="group" aria-label="...">
-        <button id="btn-zoom" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-zoom-in"/></button>
+        <button id="btn-zoom" title="btn-zoom" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-zoom-in"/></button>
         <button id="btn-remove" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-remove"/></button>
         <button id="btn-star" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star"/></button>
         <button id="btn-map" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-map-marker"/></button>
         <button id="btn-cloud" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-cloud"/></button>
         <button id="btn-plus" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-plus"/></button>
-        <button id="btn-minus" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-minus"/></button>
-        <button id="btn-time" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-time"/></button>
       </div>
 
       <div class="clearfix"></div>
 
       <div id="controls" class="text-center">
-        <div class="control">
-          <span class="glyphicon glyphicon-zoom-in"/><br/><input id="btn-zoom-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-remove"/><br/><input id="btn-remove-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-star"/><br/><input id="btn-star-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-map-marker"/><br/><input id="btn-map-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-cloud"/><br/><input id="btn-cloud-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-plus"/><br/><input id="btn-plus-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-minus"/><br/><input id="btn-minus-ctrl" type="checkbox">
-        </div>
-        <div class="control">
-          <span class="glyphicon glyphicon-time"/><br/><input id="btn-time-ctrl" type="checkbox">
-        </div>
+        <label class="control" title="checkedBoxes[0]"><span class="glyphicon glyphicon-thumbs-up"/><br/><input id="btn-zoom-ctrl" type="checkbox"></label>
+        <label class="control" title="checkedBoxes[1]"><span class="glyphicon glyphicon-thumbs-down"/><br/><input id="btn-remove-ctrl" type="checkbox"></label>
+        <label class="control" title="checkedBoxes[2]"><span class="glyphicon glyphicon-hand-right"/><br/><input id="btn-star-ctrl" type="checkbox"></label>
+        <label class="control" title="checkedBoxes[3]"><span class="glyphicon glyphicon-hand-left"/><br/><input id="btn-map-ctrl" type="checkbox"></label>
+        <label class="control" title="checkedBoxes[4]"><span class="glyphicon glyphicon-hand-up"/><br/><input id="btn-cloud-ctrl" type="checkbox"></label>
+        <label class="control" title="checkedBoxes[5]"><span class="glyphicon glyphicon-hand-down"/><br/><input id="btn-plus-ctrl" type="checkbox"></label>
+      </div>
+
+      <hr/>
+
+      <div id="demo-scripts">
+        <div><span class="glyphicon glyphicon-thumbs-up formula"></span> or <span class="glyphicon glyphicon-hand-up formula"></span> = <span class="glyphicon glyphicon-zoom-in result"></span></div>
+        <div><span class="glyphicon glyphicon-thumbs-up formula"></span> + <span class="glyphicon glyphicon-thumbs-down formula"></span> = <span class="glyphicon glyphicon-zoom-in result"></span> + <span class="glyphicon glyphicon-remove result"></span> + <span class="glyphicon glyphicon-star result"></span></div>
+        <div><span class="glyphicon glyphicon-hand-right formula"></span> + <span class="glyphicon glyphicon-hand-left formula"></span> - <span class="glyphicon glyphicon-thumbs-up formula"></span> = <span class="glyphicon glyphicon-map-marker result"></span> + <span class="glyphicon glyphicon-cloud result"></span> + <span class="glyphicon glyphicon-plus result"></span></div>
       </div>
     </div>
   </body>

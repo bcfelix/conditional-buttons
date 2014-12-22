@@ -33,13 +33,13 @@
 					if((typeof ceval === 'function') ? ceval(elm.condition, c) : eval(elm.condition)) {
 						$(this).removeAttr('disabled');
 						for(var i = 0, j = btn.activeCallbacks.length; i < j; i++) {
-							activeCallbacks[i].apply(this, [$(this)]);
+							btn.activeCallbacks[i].apply(this, [$(this)]);
 						}
 					}
 					else {
 						$(this).attr('disabled', 'disabled');
 						for(var i = 0, j = btn.disableCallbacks.length; i < j; i++) {
-							disableCallbacks[i].apply(this, [$(this)]);
+							btn.disableCallbacks[i].apply(this, [$(this)]);
 						}
 					}
 				}).data('cbtnid', cbtnid);
