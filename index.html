@@ -5,75 +5,210 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Conditional-buttons : JQuery Based Conditional Buttons">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
     <title>Conditional-buttons</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/app.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="javascripts/contextual-eval.min.js"></script>
+    <script src="javascripts/jquery.conditionalbuttons.min.js"></script>
+    <script>
+    $(function() {
+      /* register expressions for enable case */
+      //$('#btn-zoom').conditionalbuttons('checkedBoxes[0] == true');
+      $('#btn-zoom').conditionalbuttons({
+        condition: 'checkedBoxes[0] == true',
+        activeCallback: function(button) {
+          button.css('color', '#ef4836');
+        },
+        disableCallback: function(button) {
+          button.css('color', '#95a5a6');
+        }
+      });
+      $('#btn-zoom').conditionalbuttons('checkedBoxes[4] == true');
+      $('#btn-remove, #btn-star').conditionalbuttons('checkedBoxes[0] == true && checkedBoxes[1] == true');
+      $('#btn-map, #btn-cloud, #btn-plus').conditionalbuttons('checkedBoxes[0] == false && checkedBoxes[2] == true && checkedBoxes[3] == true');
+      $('.btn-group button').conditionalbuttons('checkedBoxes[5] == true');
+      /* end of register expressions */
+
+      /* trigger to change button stages */
+      var controls = $('.control input');
+      controls.click(function() {
+        var ctx = [];
+        for(var i = 0; i < controls.length; i++) {
+          ctx[i] = controls[i].checked ? true : false;
+        }
+        $.conditionalbuttons.trigger({checkedBoxes: ctx});
+      });
+    });
+    </script>
   </head>
 
   <body>
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/bcfelix/conditional-buttons">View on GitHub</a>
-
-          <h1 id="project_title">Conditional-buttons</h1>
-          <h2 id="project_tagline">JQuery Based Conditional Buttons</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/bcfelix/conditional-buttons/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/bcfelix/conditional-buttons/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+      <header class="inner">
+        <a id="forkme_banner" href="https://github.com/bcfelix/conditional-buttons">View on GitHub</a>
+        <h1 id="project_title">Conditional-buttons</h1>
+        <h2 id="project_tagline">JQuery Based Conditional Buttons</h2>
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/bcfelix/conditional-buttons/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/bcfelix/conditional-buttons/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+      </header>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <section>
+          <h2>Setup</h2>
+          <h3>Load required file(s)</h3>
+          <p>The only required file is <code>jquery.conditionalbuttons.min.js</code>.</p>
+          <p>Additionally, you can optionally add <a href="https://github.com/bcfelix/contextual-eval" target="_blank">contextual-eval.min.js</a> to simply the expressions.</p>
+          <div class="highlight highlight-javascript">
+            <pre>
+<code class="c1">//-- with contextual-eval --//</code>
+$('#btn-zoom').conditionalbuttons('checkedBoxes[0] == true');
+<code class="c1">//-- without contextual-eval --//</code>
+$('#btn-zoom').conditionalbuttons('c.checkedBoxes[0] == true');</pre>
+          </div>
+        </section>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+        <section>
+          <h2>Usages</h2>
+          <p>You have ways to register buttons.</p>
+          <h5>Generally you will do this:</h5>
+          <div class="highlight highlight-javascript">
+            <pre>
+$('#btn-zoom').conditionalbuttons('checkedBoxes[0] == true');</pre>
+          <div>
+          <h5>Optional you may pass an object to enable additional features:</h5>
+          <div class="highlight highlight-javascript">
+            <pre>
+<code class="c1">//-- these settings are optional --//</code>
+$('#btn-zoom').conditionalbuttons({
+  <code class="c1">// expression</code>
+  condition: 'checkedBoxes[0] == true',
+  <code class="c1">// custom callback when button stage become enabled</code>
+  activeCallback: function(button) {
+    button.css('color', 'red');
+  },
+  <code class="c1">// custom callback when button stage become disabled</code>
+  disableCallback: function(button) {
+    button.css('color', 'silver');
+  }
+});</pre>
+          </div>
+          <h5>Internally button registration is done in the statically way:</h5>
+          <div class="highlight highlight-javascript">
+            <pre>
+$.conditionalbuttons(
+  <code class="c1">// button jQuery selector</code>
+  '#btn-zoom',
+  <code class="c1">// expression</code>
+  'checkedBoxes[0] == true',
+  <code class="c1">// optional custom callback when button stage become enabled</code>
+  activeCallback: function(button) {
+    button.css('color', 'red');
+  },
+  <code class="c1">// optional custom callback when button stage become disabled</code>
+  disableCallback: function(button) {
+    button.css('color', 'silver');
+  }
+);</pre>
+          </div>
+        </section>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+        <section>
+          <h2>Demo</h2>
+          <section>
+            <h3>Register Expressions</h3>
+            <h5>The following expressions have registered (contextual-eval used): </h5>
+            <p>Note: multiple expressions added to the same button will joined by OR operator.</p>
+            <div class="highlight highlight-javascript">
+              <pre>
+<code class="c1">//-- additional feature is registered using object --//</code>
+$('#btn-zoom').conditionalbuttons({
+  condition: 'checkedBoxes[0] == true',
+  activeCallback: function(button) {
+    button.css('color', '#ef4836');
+  },
+  disableCallback: function(button) {
+    button.css('color', '#95a5a6');
+  }
+});
+<code class="c1">//-- mulitple expressions added onto a button will joined using OR operator --//</code>
+$('#btn-zoom').conditionalbuttons('checkedBoxes[4] == true');
+$('#btn-remove, #btn-star').conditionalbuttons('checkedBoxes[0] == true && checkedBoxes[1] == true');
+$('#btn-map, #btn-cloud, #btn-plus').conditionalbuttons('checkedBoxes[0] == false && checkedBoxes[2] == true && checkedBoxes[3] == true');
+$('.btn-group button').conditionalbuttons('checkedBoxes[5] == true');</pre>
+            </div>
+            <h5>Change button stages by calling trigger:</h5>
+            <div class="highlight highlight-javascript">
+              <pre>
+<code class="c1">//-- normalize your conditions is more preferable --//</code>
+var controls = $('.control input');
+controls.click(function() {
+  var ctx = [];
+  for(var i = 0; i < controls.length; i++) {
+    ctx[i] = controls[i].checked ? true : false;
+  }
+  $.conditionalbuttons.trigger({checkedBoxes: ctx});
+});</pre>
+            </div>
+          </section>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+          <section id="console">
+            <h3>Console</h3>
+            <div class="container-fluid text-center">
+              <div class="btn-group" role="group" aria-label="...">
+                <button id="btn-zoom" title="btn-zoom" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-zoom-in"/></button>
+                <button id="btn-remove" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-remove"/></button>
+                <button id="btn-star" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star"/></button>
+                <button id="btn-map" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-map-marker"/></button>
+                <button id="btn-cloud" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-cloud"/></button>
+                <button id="btn-plus" type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-plus"/></button>
+              </div>
 
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+              <div class="clearfix"></div>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+              <div id="controls" class="text-center">
+                <label class="control" title="checkedBoxes[0]"><span class="glyphicon glyphicon-thumbs-up"/><br/><input id="btn-zoom-ctrl" type="checkbox"></label>
+                <label class="control" title="checkedBoxes[1]"><span class="glyphicon glyphicon-thumbs-down"/><br/><input id="btn-remove-ctrl" type="checkbox"></label>
+                <label class="control" title="checkedBoxes[2]"><span class="glyphicon glyphicon-hand-right"/><br/><input id="btn-star-ctrl" type="checkbox"></label>
+                <label class="control" title="checkedBoxes[3]"><span class="glyphicon glyphicon-hand-left"/><br/><input id="btn-map-ctrl" type="checkbox"></label>
+                <label class="control" title="checkedBoxes[4]"><span class="glyphicon glyphicon-hand-up"/><br/><input id="btn-cloud-ctrl" type="checkbox"></label>
+                <label class="control" title="checkedBoxes[5]"><span class="glyphicon glyphicon-hand-down"/><br/><input id="btn-plus-ctrl" type="checkbox"></label>
+              </div>
 
-<h3>
-<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+              <hr/>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+              <div id="demo-scripts">
+                <div><span class="glyphicon glyphicon-thumbs-up formula"></span> or <span class="glyphicon glyphicon-hand-up formula"></span> = <span class="glyphicon glyphicon-zoom-in result"></span></div>
+                <div><span class="glyphicon glyphicon-thumbs-up formula"></span> + <span class="glyphicon glyphicon-thumbs-down formula"></span> = <span class="glyphicon glyphicon-zoom-in result"></span> + <span class="glyphicon glyphicon-remove result"></span> + <span class="glyphicon glyphicon-star result"></span></div>
+                <div><span class="glyphicon glyphicon-hand-right formula"></span> + <span class="glyphicon glyphicon-hand-left formula"></span> - <span class="glyphicon glyphicon-thumbs-up formula"></span> = <span class="glyphicon glyphicon-map-marker result"></span> + <span class="glyphicon glyphicon-cloud result"></span> + <span class="glyphicon glyphicon-plus result"></span></div>
+              </div>
+            </div>
+          </section>
+        </section>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+        <section>
+          <h2>See Also</h2>
+          <p>Contextual Evaluation - <a href="https://github.com/bcfelix/contextual-eval">https://github.com/bcfelix/contextual-eval</a></p>
+        </section>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Conditional-buttons maintained by <a href="https://github.com/bcfelix">bcfelix</a></p>
+        <p class="copyright">Conditional-buttons maintained by <a href="https://github.com/bcfelix">Felix Lau</a></p>
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-    
-
   </body>
 </html>
